@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Femi Opebiyi - Rust & Solana Engineer</title>
+<meta name="description" content="Femi Opebiyi is a full-stack engineer specializing in Rust and the Solana blockchain. Builder of OpenBounty and BulkPay." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg:        #0c0d10;
+    --bg-soft:   #131419;
+    --panel:     #16181f;
+    --line:      #23262f;
+    --line-soft: #1c1f27;
+    --ink:       #e7e8ea;
+    --ink-mute:  #9b9ea7;
+    --ink-faint: #61656f;
+    --amber:     #ffb454;
+    --amber-dim: #c4863a;
+    --rust:      #e06c3f;
+    --green:     #7dd88f;
+    --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(900px circle at 80% -5%, rgba(255,180,84,0.05), transparent 55%),
+      radial-gradient(700px circle at 0% 30%, rgba(224,108,63,0.035), transparent 50%);
+    background-attachment: fixed;
+  }
+
+  ::selection { background: rgba(255,180,84,0.25); color: #fff; }
+
+  a { color: inherit; text-decoration: none; }
+
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ── status bar ── */
+  .statusbar {
+    border-bottom: 1px solid var(--line-soft);
+    background: rgba(12,13,16,0.7);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .statusbar .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 46px;
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+  .statusbar .brand { color: var(--ink); font-weight: 500; letter-spacing: -0.01em; }
+  .statusbar .brand .dot { color: var(--amber); }
+  .statusbar .live {
+    display: inline-flex; align-items: center; gap: 7px;
+    color: var(--ink-faint);
+  }
+  .statusbar .pulse {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 0 0 rgba(125,216,143,0.6);
+    animation: pulse 2.4s infinite;
+  }
+  @keyframes pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(125,216,143,0.5); }
+    70%  { box-shadow: 0 0 0 6px rgba(125,216,143,0); }
+    100% { box-shadow: 0 0 0 0 rgba(125,216,143,0); }
+  }
+
+  /* ── hero ── */
+  .hero { padding: 92px 0 72px; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--amber-dim);
+    letter-spacing: 0.02em;
+    margin-bottom: 22px;
+    opacity: 0;
+    animation: rise 0.7s 0.05s forwards;
+  }
+  .eyebrow .blink {
+    display: inline-block;
+    width: 8px; height: 15px;
+    background: var(--amber);
+    margin-left: 3px;
+    vertical-align: -2px;
+    animation: blink 1.1s steps(2) infinite;
+  }
+  @keyframes blink { 0%,50%{opacity:1} 50.01%,100%{opacity:0} }
+
+  h1 {
+    font-family: var(--sans);
+    font-size: clamp(34px, 6.5vw, 52px);
+    font-weight: 600;
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+    color: var(--ink);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: rise 0.7s 0.14s forwards;
+  }
+  h1 .accent { color: var(--amber); }
+
+  .lede {
+    font-size: 17px;
+    line-height: 1.72;
+    color: var(--ink-mute);
+    max-width: 620px;
+    opacity: 0;
+    animation: rise 0.7s 0.24s forwards;
+  }
+  .lede + .lede { margin-top: 18px; }
+  .lede a {
+    color: var(--ink);
+    border-bottom: 1px solid var(--line);
+    transition: border-color .15s, color .15s;
+  }
+  .lede a:hover { border-color: var(--amber); color: var(--amber); }
+  .lede strong { color: var(--ink); font-weight: 600; }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── section heads ── */
+  .sec { padding: 30px 0; }
+  .sec-head {
+    display: flex; align-items: baseline; gap: 12px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 26px;
+  }
+  .sec-head::before { content: "//"; color: var(--amber-dim); }
+  .sec-head .rule { flex: 1; height: 1px; background: var(--line-soft); }
+
+  /* ── projects ── */
+  .proj {
+    display: block;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: linear-gradient(180deg, var(--panel), var(--bg-soft));
+    padding: 26px 26px 24px;
+    margin-bottom: 18px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color .2s, transform .2s;
+  }
+  .proj::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(420px circle at var(--mx,80%) -20%, rgba(255,180,84,0.07), transparent 60%);
+    opacity: 0; transition: opacity .3s;
+    pointer-events: none;
+  }
+  .proj:hover { border-color: #34384400; border-color: rgba(255,180,84,0.35); transform: translateY(-2px); }
+  .proj:hover::after { opacity: 1; }
+
+  .proj-top {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; margin-bottom: 5px;
+  }
+  .proj-name {
+    font-family: var(--mono);
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .proj-name .arrow {
+    display: inline-block; color: var(--amber);
+    transition: transform .2s; margin-left: 2px;
+  }
+  .proj:hover .proj-name .arrow { transform: translate(3px,-3px); }
+
+  .proj-status {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--green);
+    border: 1px solid rgba(125,216,143,0.3);
+    background: rgba(125,216,143,0.08);
+    padding: 3px 9px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .proj-tag {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--amber-dim);
+    margin-bottom: 14px;
+  }
+  .proj-desc {
+    color: var(--ink-mute);
+    font-size: 14.5px;
+    line-height: 1.66;
+    margin-bottom: 18px;
+  }
+  .proj-meta {
+    display: flex; flex-wrap: wrap; align-items: center;
+    gap: 8px 7px;
+  }
+  .chip {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--ink-mute);
+    border: 1px solid var(--line);
+    background: var(--bg);
+    padding: 3px 9px;
+    border-radius: 6px;
+  }
+  .proj-links {
+    margin-left: auto;
+    display: flex; gap: 16px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+  }
+  .proj-links a {
+    color: var(--ink-faint);
+    border-bottom: 1px solid transparent;
+    transition: color .15s, border-color .15s;
+    padding: 2px 0;
+  }
+  .proj-links a + a {
+    padding-left: 16px;
+    border-left: 1px solid var(--line);
+    margin-left: 0;
+  }
+  .proj-links a:hover { color: var(--amber); border-color: var(--amber); }
+
+  /* ── stack ── */
+  .stack-grid {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 0;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .stack-row {
+    display: contents;
+  }
+  .stack-row > div {
+    padding: 13px 18px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .stack-row:last-child > div { border-bottom: none; }
+  .stack-key {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--amber-dim);
+    background: var(--bg-soft);
+    border-right: 1px solid var(--line-soft);
+  }
+  .stack-val {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink-mute);
+  }
+  .stack-val b { color: var(--ink); font-weight: 500; }
+
+  /* ── footer / contact ── */
+  footer { padding: 48px 0 70px; }
+  .contact {
+    display: flex; flex-wrap: wrap; gap: 10px;
+  }
+  .contact a {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink-mute);
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    padding: 10px 15px;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: border-color .15s, color .15s, background .15s;
+  }
+  .contact a:hover { color: var(--amber); border-color: rgba(255,180,84,0.4); background: var(--panel); }
+  .contact a .g { color: var(--amber); }
+
+  .colophon {
+    margin-top: 38px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    line-height: 1.8;
+  }
+
+  @media (max-width: 560px) {
+    .hero { padding: 64px 0 52px; }
+    .proj-top { flex-direction: row; align-items: flex-start; }
+    .proj-links { margin-left: 0; width: 100%; margin-top: 4px; }
+    .stack-grid { grid-template-columns: 92px 1fr; }
+    .lede { font-size: 16px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .eyebrow, h1, .lede { opacity: 1 !important; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="statusbar">
+    <div class="wrap">
+      <span class="brand">femi<span class="dot">.</span>opebiyi</span>
+      <span class="live"><span class="pulse"></span>available for rust work</span>
+    </div>
+  </div>
+
+  <main class="wrap">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="eyebrow">$ whoami<span class="blink"></span></div>
+      <h1>Full-stack engineer<br />who lives in <span class="accent">Rust.</span></h1>
+
+      <p class="lede">
+        I build on <strong>Solana</strong> - designing on-chain protocols in Anchor
+        with a real command of Rust's ownership model, async, and the idiomatic
+        patterns that keep systems safe under load. I've taken protocols all the way
+        from smart contract to <strong>live production</strong>, not just to a demo.
+      </p>
+      <p class="lede">
+        Beyond the chain I work across the whole stack: backends in
+        <strong>Rust / Axum</strong>, frontends in <strong>Next.js</strong> and
+        TypeScript, and the deploy pipelines that ship them. Most recently I built
+        <a href="https://openbounty.tech" target="_blank" rel="noopener">OpenBounty</a> -
+        a trustless GitHub bounty platform that pays contributors on-chain the moment
+        their pull request merges.
+      </p>
+      <p class="lede">
+        Always up for ambitious Rust and web3 work - find me on
+        <a href="https://github.com/femiopebiyi" target="_blank" rel="noopener">GitHub</a>.
+      </p>
+    </section>
+
+    <!-- WORK -->
+    <section class="sec">
+      <div class="sec-head">selected work <span class="rule"></span></div>
+
+      <a class="proj" href="https://openbounty.tech" target="_blank" rel="noopener"
+         onmousemove="this.style.setProperty('--mx', event.offsetX+'px')">
+        <div class="proj-top">
+          <span class="proj-name">OpenBounty <span class="arrow">↗</span></span>
+          <span class="proj-status">● live · devnet</span>
+        </div>
+        <div class="proj-tag">Trustless GitHub bounties on Solana</div>
+        <p class="proj-desc">
+          Post a crypto reward on any open GitHub issue. Funds lock in an on-chain
+          escrow PDA and release automatically to the contributor whose pull request
+          merges, with no manual review and no custodian. A Rust polling service watches the
+          GitHub GraphQL API for merged PRs and triggers winner selection on-chain.
+        </p>
+        <div class="proj-meta">
+          <span class="chip">Anchor</span>
+          <span class="chip">Rust · Axum</span>
+          <span class="chip">Next.js</span>
+          <span class="chip">Postgres</span>
+          <span class="chip">SOL · USDC escrow</span>
+          <span class="proj-links">
+            <a href="https://openbounty.tech" target="_blank" rel="noopener" onclick="event.stopPropagation()">site</a>
+            <a href="https://github.com/femiopebiyi/bounty-board" target="_blank" rel="noopener" onclick="event.stopPropagation()">code</a>
+          </span>
+        </div>
+      </a>
+
+      <a class="proj" href="https://bulkpayapp.vercel.app" target="_blank" rel="noopener"
+         onmousemove="this.style.setProperty('--mx', event.offsetX+'px')">
+        <div class="proj-top">
+          <span class="proj-name">BulkPay <span class="arrow">↗</span></span>
+          <span class="proj-status">● live</span>
+        </div>
+        <div class="proj-tag">One-click mass payments on Solana</div>
+        <p class="proj-desc">
+          A bulk payment protocol that lets crypto teams send payouts to hundreds of
+          wallets in a single transaction, with automatic scheduling for recurring
+          payments. Built as a Rust + TypeScript monorepo with the on-chain program
+          handling batched transfers and the scheduler driving payroll-style runs.
+        </p>
+        <div class="proj-meta">
+          <span class="chip">Solana program</span>
+          <span class="chip">Rust</span>
+          <span class="chip">TypeScript</span>
+          <span class="chip">Recurring scheduler</span>
+          <span class="proj-links">
+            <a href="https://bulkpayapp.vercel.app" target="_blank" rel="noopener" onclick="event.stopPropagation()">site</a>
+            <a href="https://github.com/femiopebiyi/bulkpay" target="_blank" rel="noopener" onclick="event.stopPropagation()">code</a>
+          </span>
+        </div>
+      </a>
+    </section>
+
+    <!-- STACK -->
+    <section class="sec">
+      <div class="sec-head">stack <span class="rule"></span></div>
+      <div class="stack-grid">
+        <div class="stack-row">
+          <div class="stack-key">chain</div>
+          <div class="stack-val"><b>Solana</b> · Anchor · SPL · on-chain escrow & PDAs</div>
+        </div>
+        <div class="stack-row">
+          <div class="stack-key">Backend</div>
+          <div class="stack-val"><b>Axum</b> · Tokio · sqlx · async services & poller jobs</div>
+        </div>
+        <div class="stack-row">
+          <div class="stack-key">web</div>
+          <div class="stack-val"><b>Next.js</b> · TypeScript · React · wallet adapters</div>
+        </div>
+        <div class="stack-row">
+          <div class="stack-key">infra</div>
+          <div class="stack-val"><b>Docker</b> · Fly.io · Vercel · Neon Postgres</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <footer>
+      <div class="sec-head">get in touch <span class="rule"></span></div>
+      <div class="contact">
+        <a href="https://github.com/femiopebiyi" target="_blank" rel="noopener"><span class="g">▸</span> github</a>
+        <a href="https://x.com/intent/follow?screen_name=femiopebiyi" target="_blank" rel="noopener"><span class="g">▸</span> twitter / x</a>
+        <a href="https://openbounty.tech" target="_blank" rel="noopener"><span class="g">▸</span> openbounty.tech</a>
+      </div>
+      <div class="colophon">
+        built with rust on the brain · solana mainnet &amp; devnet<br />
+        &copy; <span id="yr"></span> femi opebiyi · still shipping.
+      </div>
+    </footer>
+
+  </main>
+
+  <script>
+    document.getElementById('yr').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
